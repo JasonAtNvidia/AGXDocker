@@ -132,6 +132,6 @@ export PS1="${debian_chroot:+($debian_chroot)}\u:\W\$ "' \
 RUN git clone --recursive https://github.com/pytorch/pytorch \
     && cd pytorch \
 	&& pip3 install -r requirements.txt \
-	&& python3 setup.py install
+	&& pip3 install -v .
 	
 CMD ["bash"]
