@@ -1,0 +1,39 @@
+#!/bin/bash
+#Jason T. 2-6-2018
+# Updated for Jetpack 4.2 on 3-22-2019
+
+# Check specifically for the run command
+if [[ $# -ge 2 && $1 == "run" ]]; then
+    # Tell docker to share the following folders with the base system
+    # This allows the docker containers to find CUDA, cuDNN, TensorRT
+    LIB_MAPS="/usr/lib/aarch64-linux-gnu \
+              /usr/local/cuda \
+              /usr/local/cuda/lib64 \
+			  /dev/shm \
+			  /etc/localtime \
+			  "
+	
+	# There is a need to map the libraries inside the container
+	# in the exact way programs would expect to find them as
+	# though the TX2 were operating without containers
+	LIBS=""
+	for lib in $LIB_MAPS; do
+		LIBS="$LIBS -v $lib:$lib"
+	done
+	
+	
+	# Pass in all devices in the /dev folder that are nvidia specific
+	# currently, nvidia naming convention is nv* (i.e. nvhost-ctrl)
+	DEVS=""
+	for dev in /dev/nv*; do
+		DEVS="$DEVS --device=$dev"
+	done
+	
+	# Uncomment the echo for testing purposes
+	#echo "docker run $LIBS $DEVS ${@:2}"
+	docker run $LIBS $DEVS ${@:2}
+else
+    # Run command not found, run everything straight through docker
+    #echo "docker $@"
+	docker $@
+fi
