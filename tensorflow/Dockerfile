@@ -133,7 +133,7 @@ export PS1="${debian_chroot:+($debian_chroot)}\u:\W\$ "' \
 
 # Install Tensorflow
 RUN if [ "$BUILD_VERSION" = "4.2.0"   ]; then \
-      echo "downloading jetpack-$BUILD_VERSION" ; \
+      echo "downloading Tensorflow associated with jetpack-$BUILD_VERSION" ; \
       wget -q https://developer.download.nvidia.com/compute/redist/jp/v42/tensorflow-gpu/tensorflow_gpu-1.13.1+nv19.3-cp36-cp36m-linux_aarch64.whl \
       && pip3 install tensorflow_gpu-1.13.1+nv19.3-cp36-cp36m-linux_aarch64.whl ;\
     elif [ "$BUILD_VERSION" = "4.1.1" ]; then \

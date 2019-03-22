@@ -65,6 +65,10 @@ RUN apt-get update \
     tzdata \
     unzip \
     wget \
+	python2-dev \
+	python2-yaml \
+	python2-numpy \
+	python2-
 	python3-dev \
 	python3-numpy \
 	python3-setuptools \
