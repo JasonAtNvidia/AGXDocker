@@ -2,7 +2,7 @@
 
 BUILD_DATE=$(date -u +'%Y-%m-%d-%H:%M:%S')
 CODE_NAME='bionic'
-JETPACK_VERSION='4.4.2'
+JETPACK_VERSION='4.2.0'
 USER='developer'
 USER_ID='1000'
 TAG="jetpack-$JETPACK_VERSION-$CODE_NAME"

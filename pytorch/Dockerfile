@@ -65,10 +65,10 @@ RUN apt-get update \
     tzdata \
     unzip \
     wget \
-	python2-dev \
-	python2-yaml \
-	python2-numpy \
-	python2-
+	python-dev \
+	python-yaml \
+	python-numpy \
+	python-pip \
 	python3-dev \
 	python3-numpy \
 	python3-setuptools \
@@ -133,9 +133,20 @@ export PS1="${debian_chroot:+($debian_chroot)}\u:\W\$ "' \
     >> $HOME/.bashrc
 
 
-RUN git clone --recursive https://github.com/pytorch/pytorch \
-    && cd pytorch \
-	&& pip3 install -r requirements.txt \
-	&& pip3 install -v .
 	
+# Install Tensorflow
+RUN if [ "$BUILD_VERSION" = "4.2.0"   ]; then \
+      echo "downloading PyTorch wheel associated with jetpack-$BUILD_VERSION" ; \
+      wget -v -O torch-1.1.0a0+ed8c462-cp36-cp36m-linux_aarch64.whl -L https://nvidia.box.com/shared/static/y86upxqgjps5nk0x10laoo2svha1juob.whl \
+      && pip3 install torch-1.1.0a0+ed8c462-cp36-cp36m-linux_aarch64.whl ;\
+    elif [ "$BUILD_VERSION" = "4.1.1" ]; then \
+      echo "error: I need to put something here to fix this" \
+      exit 1 ;\
+    else \
+      echo "error: please specify jetpack version in build.sh" \
+      exit 1 ;\
+    fi \
+    && rm -Rf torch-1.1.0a0+ed8c462-cp36-cp36m-linux_aarch64.whl
+	
+
 CMD ["bash"]
